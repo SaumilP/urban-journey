@@ -4,9 +4,8 @@ ENV TIKA_VERSION 1.25
 ENV TIKA_SERVER_URL https://archive.apache.org/dist/tika/tika-server-${TIKA_VERSION}.jar
 
 RUN apt-get -y --fix-missing update \
-    && apt-get install -y gpg curl gdal-bin openjdk-8-jre-headless
-
-RUN curl --silent --show-error --location https://people.apache.org/keys/group/tika.asc -o /tmp/tika.asc \
+    && apt-get install -y gpg curl gdal-bin openjdk-8-jre-headless \
+    && curl --silent --show-error --location https://people.apache.org/keys/group/tika.asc -o /tmp/tika.asc \
     && gpg --import /tmp/tika.asc \
     && curl --silent --show-error --location ${TIKA_SERVER_URL}.asc -o /tmp/tika-server-${TIKA_VERSION}.jar.asc \
     && NEAREST_TIKA_SERVER_URL=$(curl -sSL http://www.apache.org/dyn/closer.cgi/${TIKA_SERVER_URL#https://www.apache.org/dist/}\?asjson\=1 \
